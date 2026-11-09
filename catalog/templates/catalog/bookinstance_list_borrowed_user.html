@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Мои выданные книги</h1>
+
+{% if bookinstance_list %}
+<ul>
+    {% for bookinst in bookinstance_list %}
+    <li>
+        <a href="{{ bookinst.book.get_absolute_url }}">
+            {{ bookinst.book.title }}
+        </a>
+        — срок возврата: {{ bookinst.due_back|date:"d.m.Y" }}
+
+        {% if bookinst.is_overdue %}
+            <span style="color: red;">(Просрочено)</span>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>У вас пока нет выданных книг.</p>
+{% endif %}
+
+{% endblock %}
