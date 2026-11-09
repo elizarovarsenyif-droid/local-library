@@ -5,6 +5,7 @@
 <h1>Все выданные книги</h1>
 
 {% if bookinstance_list %}
+
 <ul>
     {% for bookinst in bookinstance_list %}
     <li>
@@ -12,8 +13,11 @@
             {{ bookinst.book.title }}
         </a>
         — срок возврата: {{ bookinst.due_back|date:"d.m.Y" }}
-    </li>
-    {% endfor %}
+    {% if perms.catalog.can_mark_returned %}
+        — <a href="{% url 'renew-book-librarian' bookinst.id %}">Продлить</a>
+    {% endif %}
+</li>
+{% endfor %}
 </ul>
 {% else %}
 <p>Сейчас нет выданных книг.</p>
